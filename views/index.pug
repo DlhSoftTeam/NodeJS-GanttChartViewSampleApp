@@ -41,3 +41,11 @@ block content
 
     // Initialize the component.
     DlhSoft.Controls.GanttChartView.initialize(ganttChartView, items, settings);
+
+    // Handle client side item changes.
+    settings.itemPropertyChangeHandler = function (item, propertyName, isDirect, isFinal){
+        if ((propertyName == 'content' || propertyName == 'start' || propertyName == 'finish' || propertyName == 'completedFinish' || propertyName == 'predecessors')
+            && isFinal) {
+            //...
+        }
+    };
