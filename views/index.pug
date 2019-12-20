@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  h1= title
+  div(id='ganttChartView', style='height: 480px; margin-bottom: 4px;') ...
+
+  script.
+    // Retrieve and store the control and related elements for reference purposes.
+    var ganttChartView = document.querySelector('#ganttChartView');
+    var changes = document.querySelector('#changes');
+
+    // Prepare  data items.
+    var items = [], year = 2020, month = 1 - 1;
+
+  - var i = 0
+  while i < 32
+    - i++
+    script.
+      var item = { 
+        content: 'Task #{i}', 
+        start: new Date(year, month, #{i}, 8), 
+        finish: new Date(year, month, #{i * 2}, #{ i % 2 == 0 ? 12 : 16 }) };
+    if i % 2 == 0
+      script.
+        item.predecessors = [{ item: previousItem }];
+    script.
+      items.push(item);
+      var previousItem = item;
+  
+  script.
+    // Prepare control settings.
+    var settings = {
+      currentTime: new Date(year, month, 2, 12),
+      gridWidth: '26%', chartWidth: '74%'
+    };
+
+    // Remove not used grid columns.
+    var columns = DlhSoft.Controls.GanttChartView.getDefaultColumns(items, settings);
+    var indexOffset = columns[0].isSelection ? 1 : 0;
+    columns.splice(indexOffset + 3, 3);
+    settings.columns = columns;
+
+    // Initialize the component.
+    DlhSoft.Controls.GanttChartView.initialize(ganttChartView, items, settings);
