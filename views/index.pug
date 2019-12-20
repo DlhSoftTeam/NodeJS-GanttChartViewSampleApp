@@ -5,11 +5,10 @@ block content
   div(id='ganttChartView', style='height: 480px; margin-bottom: 4px;') ...
 
   script.
-    // Retrieve and store the control and related elements for reference purposes.
+    // Retrieve and store the control for reference purposes.
     var ganttChartView = document.querySelector('#ganttChartView');
-    var changes = document.querySelector('#changes');
-
-    // Prepare  data items.
+    
+    // Prepare data items.
     var items = [], year = 2020, month = 1 - 1;
 
   - var i = 0
